@@ -5,6 +5,7 @@
     skip_installed: true
     name:
       - ttf-impallari-cabin-font # cv font
+      - ttf-ms-fonts # microsoft fonts
       - glow # render markdown cli
       - zrepl # zfs snapshot manager
 
@@ -14,6 +15,7 @@
       # Main
       - ttf-jetbrains-mono # main font
       - noto-fonts         # unicode font
+      - noto-fonts-emoji   # emojis
       # Shell
       - fish               # powerful shell
       - starship           # cross-shell prompt
@@ -51,12 +53,13 @@
       - wget               # downloader
       - bind-tools         # dns tools
       - openbsd-netcat     # network utility
-      - speedtest-cli      # 
+      - speedtest-cli      #
       # Utils
       - cronie             # Scheduler
       - at                 # Scheduler
       - borgbackup         # backup utility
       - borgmatic          # backup utility automation
+      - pwgen              # random password generator
       - lsd                # improved ls command
       - rsync              # sync tool
       - rclone             # sync tool

@@ -60,6 +60,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   * Configuration is now done in `01-configure.sh`
   * You can execute `02-install.sh` without any previously done configuration, `install.dist.conf` is then used
 
+## [1.1.0](https://github.com/stevleibelt/arch-linux-configuration/tree/1.1.0) - released at 20231001
+
+### Changed
+
+* Merged with [latest](https://github.com/eoli3n/arch-config/commit/fe88200e17a26a6734eb954e96f2a9b6cf4efe71) code from [upstream](https://github.com/eoli3n/arch-config)
+
 ## [1.0.0](https://github.com/stevleibelt/arch-linux-configuration/tree/1.0.0) - released at 20220820
 
 ### Added

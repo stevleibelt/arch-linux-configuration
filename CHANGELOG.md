@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### To Add
 
+* Add [encrypted swap partition](https://github.com/stevleibelt/arch-linux-configuration/issues) to support suspend-to-disk
 * Add automatic installation of fitting [xorg drivers](https://wiki.archlinux.org/title/Xorg#Installation)
 * Add [pacman hook](https://wiki.archlinux.org/title/Dynamic_Kernel_Module_Support#Initial_ramdisk) when zfs-dkms is installed
 * Add usage of `localectl set-{keymap|locale|x11-keymap}` as figured out [here](https://github.com/sddm/sddm/issues/202)
@@ -58,6 +59,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed where the configuration is done
   * Configuration is now done in `01-configure.sh`
   * You can execute `02-install.sh` without any previously done configuration, `install.dist.conf` is then used
+
+## [1.1.0](https://github.com/stevleibelt/arch-linux-configuration/tree/1.1.0) - released at 20231001
+
+### Changed
+
+* Merged with [latest](https://github.com/eoli3n/arch-config/commit/fe88200e17a26a6734eb954e96f2a9b6cf4efe71) code from [upstream](https://github.com/eoli3n/arch-config)
 
 ## [1.0.0](https://github.com/stevleibelt/arch-linux-configuration/tree/1.0.0) - released at 20220820
 

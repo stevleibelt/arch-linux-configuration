@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### To Add
 
+* Add parts missed here but used [here](https://gist.github.com/Soulsuke/6a7d1f09f7fef968a2f32e0ff32a5c4c)
 * Add [encrypted swap partition](https://github.com/stevleibelt/arch-linux-configuration/issues) to support suspend-to-disk
 * Add automatic installation of fitting [xorg drivers](https://wiki.archlinux.org/title/Xorg#Installation)
 * Add [pacman hook](https://wiki.archlinux.org/title/Dynamic_Kernel_Module_Support#Initial_ramdisk) when zfs-dkms is installed

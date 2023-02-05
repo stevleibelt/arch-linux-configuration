@@ -47,6 +47,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+* Added option to create an unencrypted `zroot`
 * [ZFS Install](scripts/zfs/install)
   * Added support for `install.dist.conf`
 * Started [help](doc/help) section

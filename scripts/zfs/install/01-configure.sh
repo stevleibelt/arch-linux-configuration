@@ -92,12 +92,21 @@ function partition ()
 
 function zfs_passphrase ()
 {
-  # Generate key
-  print ":: Set ZFS passphrase"
-  read -r -p "> ZFS passphrase: " -s pass
-  echo
-  echo "${pass}" > /etc/zfs/zroot.key
-  chmod 000 /etc/zfs/zroot.key
+  ask ":: Do you want to encrypt >>${DISK}<<? (Y|n)"
+  if [[ ${REPLY} =~ ^[Nn]$ ]]
+  then
+    # Generate key
+    print ":: Set ZFS passphrase"
+    read -r -p "> ZFS passphrase: " -s pass
+    echo
+    echo "${pass}" > /etc/zfs/zroot.key
+    chmod 000 /etc/zfs/zroot.key
+  else
+    if [[ -f /etc/zfs/zroot.key ]];
+    then
+      rm /etc/zfs/zroot.key
+    fi
+  fi
 }
 
 function create_pool ()
@@ -106,23 +115,41 @@ function create_pool ()
   ZFS="${DISK}-part3"
   
   # Create ZFS pool
-  print "Create ZFS pool"
-  zpool create -f -o ashift=12                          \
-               -o autotrim=on                           \
-               -O acltype=posixacl                      \
-               -O compression=zstd                      \
-               -O relatime=on                           \
-               -O xattr=sa                              \
-               -O dnodesize=legacy                      \
-               -O encryption=aes-256-gcm                \
-               -O keyformat=passphrase                  \
-               -O keylocation=file:///etc/zfs/zroot.key \
-               -O normalization=formD                   \
-               -O mountpoint=none                       \
-               -O canmount=off                          \
-               -O devices=off                           \
-               -R /mnt                                  \
-               zroot "${ZFS}"
+  if [[ -f /etc/zfs/zroot.key ]];
+  then
+    print "Create encrypted ZFS pool"
+    zpool create -f -o ashift=12                          \
+                 -o autotrim=on                           \
+                 -O acltype=posixacl                      \
+                 -O compression=zstd                      \
+                 -O relatime=on                           \
+                 -O xattr=sa                              \
+                 -O dnodesize=legacy                      \
+                 -O encryption=aes-256-gcm                \
+                 -O keyformat=passphrase                  \
+                 -O keylocation=file:///etc/zfs/zroot.key \
+                 -O normalization=formD                   \
+                 -O mountpoint=none                       \
+                 -O canmount=off                          \
+                 -O devices=off                           \
+                 -R /mnt                                  \
+                 zroot "${ZFS}"
+  else
+    print "Create ZFS pool"
+    zpool create -f -o ashift=12                          \
+                 -o autotrim=on                           \
+                 -O acltype=posixacl                      \
+                 -O compression=zstd                      \
+                 -O relatime=on                           \
+                 -O xattr=sa                              \
+                 -O dnodesize=legacy                      \
+                 -O normalization=formD                   \
+                 -O mountpoint=none                       \
+                 -O canmount=off                          \
+                 -O devices=off                           \
+                 -R /mnt                                  \
+                 zroot "${ZFS}"
+  fi
 }
 
 function create_root_dataset ()

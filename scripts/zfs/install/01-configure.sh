@@ -103,9 +103,17 @@ function zfs_passphrase ()
     # Generate key
     print ":: Set ZFS passphrase"
     read -r -p "> ZFS passphrase: " -s pass
-    echo
-    echo "${pass}" > /etc/zfs/zroot.key
-    chmod 000 /etc/zfs/zroot.key
+    read -r -p "> ZFS passphrase confirmation: " -s pass2
+
+    if [[ "${pass}" == "${pass2}" ]];
+    then
+      echo "${pass}" > /etc/zfs/zroot.key
+      chmod 000 /etc/zfs/zroot.key
+    else
+      echo "   Passwords differ."
+
+      zfs_passphrase
+    fi
   fi
 }
 

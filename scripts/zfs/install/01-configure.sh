@@ -93,19 +93,19 @@ function partition ()
 function zfs_passphrase ()
 {
   ask ":: Do you want to encrypt >>${DISK}<<? (Y|n)"
-  if [[ ${REPLY} =~ ^[Nn]$ ]]
+  if [[ ${REPLY} =~ ^[Nn]$ ]];
   then
+    if [[ -f /etc/zfs/zroot.key ]];
+    then
+      rm /etc/zfs/zroot.key
+    fi
+  else
     # Generate key
     print ":: Set ZFS passphrase"
     read -r -p "> ZFS passphrase: " -s pass
     echo
     echo "${pass}" > /etc/zfs/zroot.key
     chmod 000 /etc/zfs/zroot.key
-  else
-    if [[ -f /etc/zfs/zroot.key ]];
-    then
-      rm /etc/zfs/zroot.key
-    fi
   fi
 }
 

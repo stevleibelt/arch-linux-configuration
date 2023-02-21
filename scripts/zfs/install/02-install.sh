@@ -37,17 +37,22 @@ function print ()
 
 function _main ()
 {
+  local PATH_TO_THIS_SCRIPT=$(cd `dirname ${0}` && pwd)
+
+  local PATH_TO_THE_LOCAL_INSTALL_CONF="${PATH_TO_THIS_SCRIPT}/install.conf"
+  local PATH_TO_THE_DIST_INSTALL_CONF="${PATH_TO_THIS_SCRIPT}/install.dist.conf"
+
   #bo: sourcing install configuration files
-  if [[ -f install.dist.conf ]];
+  if [[ -f "${PATH_TO_THE_DIST_INSTALL_CONF}" ]];
   then
     echo ":: Sourcing >>install.dist.conf<<."
-    . install.dist.conf
+    . "${PATH_TO_THE_DIST_INSTALL_CONF}"
   fi
 
-  if [[ -f install.conf ]];
+  if [[ -f "${PATH_TO_THE_LOCAL_INSTALL_CONF}" ]];
   then
     echo ":: Sourcing >>install.conf<<."
-    . install.conf
+    . "${PATH_TO_THE_LOCAL_INSTALL_CONF}"
   fi
   #bo: sourcing install configuration files
 

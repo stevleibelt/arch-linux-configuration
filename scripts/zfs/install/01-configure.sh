@@ -103,8 +103,10 @@ function zfs_passphrase ()
     # Generate key
     print ":: Set ZFS passphrase"
     read -r -p "> ZFS passphrase: " -s pass
+    echo ""
     print "   Please confirm your passphrase"
     read -r -p "> ZFS passphrase: " -s pass2
+    echo ""
 
     if [[ "${pass}" == "${pass2}" ]];
     then
@@ -235,6 +237,7 @@ function copy_zpool_cache ()
 
 function _main ()
 {
+  local PATH_TO_THIS_SCRIPT=$(cd `dirname ${0}` && pwd)
   tests
 
   print ":: Is this the first install or a second install to dualboot?"
@@ -281,7 +284,7 @@ function _main ()
   # By sourcing an existing file before asking the question, we can easily extend the questions/variables
   #   or use pre configured install.conf files but configure all missing variables
 
-  install_conf="install.conf"
+  install_conf="${PATH_TO_THIS_SCRIPT}/install.conf"
 
   if [[ -f ${install_conf} ]];
   then

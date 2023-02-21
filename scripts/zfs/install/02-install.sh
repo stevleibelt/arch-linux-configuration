@@ -178,7 +178,7 @@ EOF
   echo ":: eo timedate configuration"
 
   echo ":: bo chroot configuration"
-  arch-chroot /mnt /bin/bash -xe <<EOF
+  cat > /mnt/setup.sh <<EOF
 
   ### Reinit keyring
   # As keyring is initialized at boot, and copied to the install dir with pacstrap, and ntp is running
@@ -210,7 +210,7 @@ Server = https://mirror.in.themindsmaze.com/archzfs/archzfs/x86_64
 Server = https://zxcvfdsa.com/archzfs/archzfs/x86_64
 EOSF
   fi
-  pacman -Syu --noconfirm zfs-dkms zfs-utils
+  pacman -Syu --noconfirm ${zfskernelmode}
 
   # Set date
   ln -sf /usr/share/zoneinfo/${timezone} /etc/localtime
@@ -242,8 +242,15 @@ EOSF
   chown -R ${user}:${user} /home/${user}
 
 EOF
+  arch-chroot /mnt /bin/bash /setup.sh
+
+  if [[ ${?} -eq 0 ]];
+  then
+    rm /mnt/setup.sh
+  fi
   echo ":: eo chroot configuration"
 
+  echo ":: bo user configuration"
   # Set root passwd
   print ":: Set root password"
   arch-chroot /mnt /bin/passwd
@@ -259,6 +266,7 @@ root ALL=(ALL) ALL
 ${user} ALL=(ALL) ALL
 Defaults rootpw
 EOF
+  echo ":: eo user configuration"
 
   # Configure network
   if [[ ${configure_network} -eq 1 ]];
@@ -339,19 +347,22 @@ EOF
   fi
 
   # Activate zfs
-  print ":: Configure ZFS"
+  echo ":: bo zfs inconfiguration"
+  echo "   Enable zfs service"
   systemctl enable zfs-import-cache --root=/mnt
   systemctl enable zfs-mount --root=/mnt
   systemctl enable zfs-import.target --root=/mnt
   systemctl enable zfs.target --root=/mnt
 
   # Configure zfs-mount-generator
-  print ":: Configure zfs-mount-generator"
+  print "   Configure zfs-mount-generator"
   mkdir -p /mnt/etc/zfs/zfs-list.cache
   touch /mnt/etc/zfs/zfs-list.cache/${zpoolname}
   zfs list -H -o name,mountpoint,canmount,atime,relatime,devices,exec,readonly,setuid,nbmand | sed 's/\/mnt//' > /mnt/etc/zfs/zfs-list.cache/${zpoolname}
   systemctl enable zfs-zed.service --root=/mnt
+  echo ":: eo zfs inconfiguration"
 
+  echo ":: bo zfsbootmenu"
   # Configure zfsbootmenu
   mkdir -p /mnt/efi/EFI/ZBM
 
@@ -396,6 +407,7 @@ EOF
   # Generate zfsbootmenu
   generate-zbm
 EOF
+  echo ":: eo zfsbootmenu"
 
   # Set DISK
   if [[ -f /tmp/disk ]]
@@ -412,7 +424,8 @@ EOF
   fi
 
   # Create UEFI entries
-  print ":: Create efi boot entries"
+  echo ":: bo uefi boot entries"
+
   if ! efibootmgr | grep ZFSBootMenu
   then
     efibootmgr --disk "${DISK}" \

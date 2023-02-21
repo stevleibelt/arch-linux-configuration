@@ -436,6 +436,35 @@ function _main ()
   fi
   #eo: configuration section
 
+  #bo: dkms or no dkms
+  if [[ -z ${zfskernelmode+x} ]];
+  then
+    echo "Which zfs do you want to install?"
+    if [[ ${kernel} == "linux" ]];
+    then
+      ask "0) archzfs-dkms (default) 1) archzfs-linux"
+
+      case ${REPLY:-0} in
+        1) zfskernelmode="archzfs-linux"
+          ;;
+        *) zfskernelmod="archzfs-dkms"
+          ;;
+      esac
+    else
+      ask "0) archzfs-dkms (default) 1) archzfs-linux-lts"
+
+      case ${REPLY:-0} in
+        1) zfskernelmode="archzfs-linux-lts"
+          ;;
+        *) zfskernelmod="archzfs-dkms"
+          ;;
+      esac
+    fi
+
+    echo "zfskernelmode=\"${zfskernelmode}\"" >> ${install_conf}
+  fi
+  #eo: dkms or no dkms
+
   # Finish
   echo -e "\e[32mAll OK"
 }

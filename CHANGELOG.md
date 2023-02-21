@@ -51,6 +51,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * [ZFS Install](scripts/zfs/install)
   * Added support for `install.dist.conf`
 * Started [help](doc/help) section
+* Added selection of `archzfs-dkms` or `archzfs-linux[-lts]` should be installed
 
 ### Changed
 

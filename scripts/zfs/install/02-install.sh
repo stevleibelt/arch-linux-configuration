@@ -42,16 +42,16 @@ function _main ()
   local PATH_TO_THE_LOCAL_INSTALL_CONF="${PATH_TO_THIS_SCRIPT}/install.conf"
   local PATH_TO_THE_DIST_INSTALL_CONF="${PATH_TO_THIS_SCRIPT}/install.dist.conf"
 
-  #bo: sourcing install configuration files
+  echo ":: bo sourcing configuration files "
   if [[ -f "${PATH_TO_THE_DIST_INSTALL_CONF}" ]];
   then
-    echo ":: Sourcing >>install.dist.conf<<."
+    echo "   Sourcing >>install.dist.conf<<."
     . "${PATH_TO_THE_DIST_INSTALL_CONF}"
   fi
 
   if [[ -f "${PATH_TO_THE_LOCAL_INSTALL_CONF}" ]];
   then
-    echo ":: Sourcing >>install.conf<<."
+    echo "   Sourcing >>install.conf<<."
     . "${PATH_TO_THE_LOCAL_INSTALL_CONF}"
   fi
   #bo: sourcing install configuration files
@@ -64,7 +64,9 @@ function _main ()
 
     exit 1
   fi
+  echo ":: eo sourcing configuration files "
 
+  echo ":: bo installing base packages"
   # Root dataset
   root_dataset=$(cat /tmp/root_dataset)
 
@@ -93,7 +95,9 @@ function _main ()
     vim                   \
     git                   \
     ansible
+  echo ":: eo installing base packages"
 
+  echo ":: bo creating etc files"
   # Generate fstab excluding ZFS entries
   print ":: Generate fstab excluding ZFS entries"
   genfstab -U /mnt | grep -v "${zpoolname}" | tr -s '\n' | sed 's/\/mnt//'  > /mnt/etc/fstab
@@ -113,10 +117,12 @@ EOF
   # Prepare locales
   sed -i 's/#\('"${locale}"'.UTF-8\)/\1/' /mnt/etc/locale.gen
   echo 'LANG="'"${locale}"'.UTF-8"' > /mnt/etc/locale.conf
+  echo ":: eo creating etc files"
 
+  echo ":: bo initramfs"
   # Prepare initramfs
   print ":: Prepare initramfs"
-  if lspci | grep ' VGA ' | grep -q -i intel
+  if lspci | grep -i 'VGA' | grep -q -i intel
   then
     modules="i915 intel_agp"
   else
@@ -146,7 +152,9 @@ PRESETS=('default')
 default_image="/boot/initramfs-linux.img"
 EOF
   fi
+  echo ":: eo initramfs"
 
+  echo ":: bo copy zfs files"
   print ":: Copy ZFS files"
   cp /etc/hostid /mnt/etc/hostid
   cp /etc/zfs/zpool.cache /mnt/etc/zfs/zpool.cache
@@ -163,13 +171,13 @@ EOF
       rm -fr /mnt/home/$user
     fi
   fi
+  echo ":: eo copy zfs files"
 
-  print ":: Configure timezone"
+  echo ":: bo timedate configuration"
   timedatectl set-ntp true
+  echo ":: eo timedate configuration"
 
-  # Chroot and configure
-  print ":: Chroot and configure system"
-
+  echo ":: bo chroot configuration"
   arch-chroot /mnt /bin/bash -xe <<EOF
 
   ### Reinit keyring
@@ -234,6 +242,7 @@ EOSF
   chown -R ${user}:${user} /home/${user}
 
 EOF
+  echo ":: eo chroot configuration"
 
   # Set root passwd
   print ":: Set root password"

@@ -103,7 +103,8 @@ function zfs_passphrase ()
     # Generate key
     print ":: Set ZFS passphrase"
     read -r -p "> ZFS passphrase: " -s pass
-    read -r -p "> ZFS passphrase confirmation: " -s pass2
+    print "   Please confirm your passphrase"
+    read -r -p "> ZFS passphrase: " -s pass2
 
     if [[ "${pass}" == "${pass2}" ]];
     then

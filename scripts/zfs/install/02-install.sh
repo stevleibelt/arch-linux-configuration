@@ -40,11 +40,13 @@ function _main ()
   #bo: sourcing install configuration files
   if [[ -f install.dist.conf ]];
   then
+    echo ":: Sourcing >>install.dist.conf<<."
     . install.dist.conf
   fi
 
   if [[ -f install.conf ]];
   then
+    echo ":: Sourcing >>install.conf<<."
     . install.conf
   fi
   #bo: sourcing install configuration files

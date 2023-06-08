@@ -447,7 +447,7 @@ function _main ()
       case ${REPLY:-0} in
         1) zfskernelmode="archzfs-linux"
           ;;
-        *) zfskernelmod="archzfs-dkms"
+        *) zfskernelmode="archzfs-dkms"
           ;;
       esac
     else
@@ -456,7 +456,7 @@ function _main ()
       case ${REPLY:-0} in
         1) zfskernelmode="archzfs-linux-lts"
           ;;
-        *) zfskernelmod="archzfs-dkms"
+        *) zfskernelmode="archzfs-dkms"
           ;;
       esac
     fi

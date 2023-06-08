@@ -63,7 +63,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   * Configuration is now done in `01-configure.sh`
   * You can execute `02-install.sh` without any previously done configuration, `install.dist.conf` is then used
 
-## [1.1.0](https://github.com/stevleibelt/arch-linux-configuration/tree/1.1.0) - released at 20231001
+## [1.1.1](https://github.com/stevleibelt/arch-linux-configuration/tree/1.1.1) - released at 20230608
+
+### Changed
+
+* Fixed [issue/2](https://github.com/stevleibelt/arch-linux-configuration/issues/2)
+
+## [1.1.0](https://github.com/stevleibelt/arch-linux-configuration/tree/1.1.0) - released at 20230101
 
 ### Changed
 

@@ -88,7 +88,7 @@ function _main ()
     base-devel            \
     bash-completion       \
     ${kernel}             \
-    ${kernel-headers}     \
+    ${kernel}-headers     \
     linux-firmware        \
     ${microcode_package}  \
     efibootmgr            \

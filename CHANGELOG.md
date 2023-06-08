@@ -47,6 +47,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+### Changed
+
+## [2.0.1](https://github.com/stevleibelt/arch-linux-configuration/tree/2.0.1) - released at 20230608
+
+### Changed
+
+* Fixed [issue/3](https://github.com/stevleibelt/arch-linux-configuration/issues/3)
+
+## [2.0.0](https://github.com/stevleibelt/arch-linux-configuration/tree/2.0.0) - released at 20230608
+
+### Added
+
 * Added option to create an unencrypted `zroot`
 * [ZFS Install](scripts/zfs/install)
   * Added support for `install.dist.conf`
@@ -55,6 +67,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* Fixed [issue/2](https://github.com/stevleibelt/arch-linux-configuration/issues/2)
 * Fixed issue with $zpoolname in the `mkinitcpio.conf` generation
 * Fixed issue when configuring dns
 * Fixed issue when configuring network by using NetworkManager
@@ -62,12 +75,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed where the configuration is done
   * Configuration is now done in `01-configure.sh`
   * You can execute `02-install.sh` without any previously done configuration, `install.dist.conf` is then used
-
-## [1.1.1](https://github.com/stevleibelt/arch-linux-configuration/tree/1.1.1) - released at 20230608
-
-### Changed
-
-* Fixed [issue/2](https://github.com/stevleibelt/arch-linux-configuration/issues/2)
 
 ## [1.1.0](https://github.com/stevleibelt/arch-linux-configuration/tree/1.1.0) - released at 20230101
 

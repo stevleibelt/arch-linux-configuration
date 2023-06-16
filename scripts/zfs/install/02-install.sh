@@ -237,7 +237,7 @@ EOSF
   cpanm --notest --installdeps .
 
   # Create swap
-  zfs create -V 8GB -b $(getconf PAGESIZE) -o compression=zle -o logbias=throughput -o sync=always -primarycache=meta -o secondarycache=none -o com.sun:auto-snapshot=false zroot/swap
+  zfs create -V 8GB -b \$(getconf PAGESIZE) -o compression=zle -o logbias=throughput -o sync=always -primarycache=metadata -o secondarycache=none -o com.sun:auto-snapshot=false zroot/swap
   mkswap -f /dev/zvol/zroot/swap
   swapon /dev/zvol/zroot/swap
   echo '/dev/zvol/zroot/swap  none  swap  discard 0 0' > /etc/fstab

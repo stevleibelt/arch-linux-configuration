@@ -182,7 +182,7 @@ function create_system_dataset ()
 
   # Generate zfs hostid
   print "Generate hostid"
-  zgenhostid
+  zgenhostid -f
   
   # Set bootfs 
   print "Set ZFS bootfs"
@@ -209,7 +209,10 @@ function import_pool ()
 {
     print ":: Import zpool"
     zpool import -d /dev/disk/by-id -R /mnt zroot -N -f
-    zfs load-key zroot
+    if [[ -f /etc/zfs/zroot.key ]];
+    then
+      zfs load-key zroot
+    fi
 }
 
 function mount_system ()

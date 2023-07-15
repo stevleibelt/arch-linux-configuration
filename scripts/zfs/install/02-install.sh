@@ -158,7 +158,11 @@ EOF
   print ":: Copy ZFS files"
   cp /etc/hostid /mnt/etc/hostid
   cp /etc/zfs/zpool.cache /mnt/etc/zfs/zpool.cache
-  cp /etc/zfs/${zpoolname}.key /mnt/etc/zfs
+  if [[ -f /etc/zfs/zroot.key ]];
+  then
+    cp /etc/zfs/${zpoolname}.key /mnt/etc/zfs
+  fi
+  
 
   ### Configure username
   if [[ -d /mnt/home/${user} ]];
@@ -237,7 +241,7 @@ EOSF
   cpanm --notest --installdeps .
 
   # Create swap
-  zfs create -V 8GB -b \$(getconf PAGESIZE) -o compression=zle -o logbias=throughput -o sync=always -primarycache=metadata -o secondarycache=none -o com.sun:auto-snapshot=false zroot/swap
+  zfs create -V 8GB -b \$(getconf PAGESIZE) -o compression=zle -o logbias=throughput -o sync=always -o primarycache=metadata -o secondarycache=none -o com.sun:auto-snapshot=false zroot/swap
   mkswap -f /dev/zvol/zroot/swap
   swapon /dev/zvol/zroot/swap
   echo '/dev/zvol/zroot/swap  none  swap  discard 0 0' > /etc/fstab

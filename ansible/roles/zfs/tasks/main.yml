@@ -1,22 +1,24 @@
 ---
-- name: install zrepl
-  become: no
-  aur:
-    name: zrepl
-    skip_installed: true
-
-- name: create zrepl dir
-  file:
-    path: /etc/zrepl
-    state: directory
-
-- name: configure zrepl
-  blockinfile:
-    block: "{{ lookup('file', 'zrepl.yml') }}"
-    marker: "# {mark} snapshot config"
-    dest: /etc/zrepl/zrepl.yml
-    create: yes
-  notify: restart zrepl
+- name: configure zfs auto snapshot
+  shell: |
+    zfs set com.sun:auto-snapshot=false zroot
+    zfs set com.sun:auto-snapshot=false zroot/data
+    zfs set com.sun:auto-snapshot=false zroot/ROOT
+    zfs set com.sun:auto-snapshot=false zroot/data
+    zfs set com.sun:auto-snapshot=true zroot/data/home
+    zfs set com.sun:auto-snapshot=true zroot/ROOT/archlinux
+    zfs set com.sun:auto-snapshot:frequent=false zroot/data/home
+    zfs set com.sun:auto-snapshot:monthly=false zroot/data/home
+    zfs set com.sun:auto-snapshot:hourly=false zroot/data/home
+    zfs set com.sun:auto-snapshot:weekly=false zroot/data/home
+    zfs set com.sun:auto-snapshot:daily=true zroot/data/home
+    zfs set com.sun:auto-snapshot=true zroot/data/home
+    zfs set com.sun:auto-snapshot:frequent=false zroot/ROOT/archlinux
+    zfs set com.sun:auto-snapshot:monthly=false zroot/ROOT/archlinux
+    zfs set com.sun:auto-snapshot:hourly=false zroot/ROOT/archlinux
+    zfs set com.sun:auto-snapshot:weekly=false zroot/ROOT/archlinux
+    zfs set com.sun:auto-snapshot:daily=true zroot/ROOT/archlinux
+    zfs set com.sun:auto-snapshot=true zroot/ROOT/archlinux
 
 - name: setup daily zfs scrub
   copy:

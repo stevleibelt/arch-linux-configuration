@@ -14,8 +14,10 @@
       - brightnessctl # brightness manager
       - wofi # rofi for wayland
       - swayidle
+      - swaylock # lock screen for sway
       - xdg-user-dirs
       - xdg-desktop-portal-wlr
+      - xdg-desktop-portal-gtk
     state: present
 
 - name: install video packages
@@ -46,7 +48,7 @@
   pacman:
     name:
       - imv # img visualizer
-      - kitty # terminal emulator
+      - wezterm # terminal emulator
       - evince # pdf viewer
       - evolution # mail client
       - gnome-keyring # evolution gnome keyring
@@ -70,6 +72,7 @@
       - remmina # remote desktop client
       - freerdp # remmina dep for rdp
       - steam # games manager
+      - senpai # irc client for soju
       - transmission-gtk # torrent downloader
       - texlive-bin # latex
       - texlive-core # latex
@@ -79,13 +82,14 @@
       - papirus-icon-theme # icon theme
       - gnome-themes-extra # gtk themes
       #- x2goclient
-      - youtube-dl
       - gopass # password manager
+      - okular # pdf editor, no image overlay
+      - xournalpp # pdf editor, no form
     state: present
 
 - name: add missing gpg keys for aur
   become: no
-  shell: gpg --recv --keyserver keyserver.ubuntu.com '{{item}}'
+  shell: gpg --recv '{{item}}'
   loop:
     - F4B432D5D67990E3 # wob
 
@@ -100,7 +104,7 @@
       - equilux-theme
       - wdisplays-git # arandr for wayland
       - wf-recorder-git # screen recorder for wayland
-      - grimshot-git # grim+slurp wrapper
+      - grimshot # grim+slurp wrapper
       - waypipe # wayland ssh -X
       - wob # bars for wayland
       - connman-gtk # connman gtk gui
@@ -113,11 +117,9 @@
       - otf-font-awesome
       #- ttf-impallari-cabin-font # xelatex cv
       - pastel # color viewer
-      - tiny-irc-client-git
-      - starleaf-breeze
       - swappy # screenshot editor
-      - senpai-irc # irc client for soju
-      - rbenv # ruby env manager
+      - rbenv-latest # ruby env manager
+      - iwgtk # gui for iwd
       #- phockup # picture sorting tool
 
 - name: test swaylock-fancy

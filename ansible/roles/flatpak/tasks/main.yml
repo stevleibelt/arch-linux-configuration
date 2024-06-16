@@ -23,7 +23,9 @@
     - com.mojang.Minecraft
     - com.github.Anuken.Mindustry
     - us.zoom.Zoom
-    - com.microsoft.Teams
+    - fi.skyjake.Lagrange # gemini browser
+    - net.xmind.XMind # mind mapping
+    #- com.microsoft.Teams
 
 - name: Install flatpak beta packages
   community.general.flatpak:
@@ -33,13 +35,13 @@
   loop:
     - org.freecadweb.FreeCAD
 
-- name: Override Teams perms
-  shell: |
-    flatpak override com.microsoft.Teams \
-      --filesystem=~/desktop:ro \
-      --filesystem=~/img:ro \
-      --filesystem=~/downloads:ro \
-      --filesystem=~/share:ro
+#- name: Override Teams perms
+#  shell: |
+#    flatpak override com.microsoft.Teams \
+#      --filesystem=~/desktop:ro \
+#      --filesystem=~/img:ro \
+#      --filesystem=~/downloads:ro \
+#      --filesystem=~/share:ro
 
 - name: zoom screen sharing
   shell : |

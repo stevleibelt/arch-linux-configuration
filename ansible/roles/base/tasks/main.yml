@@ -7,7 +7,7 @@
       - ttf-impallari-cabin-font # cv font
       - ttf-ms-fonts # microsoft fonts
       - glow # render markdown cli
-      - zrepl # zfs snapshot manager
+      - zfs-auto-snapshot-git
 
 - name: install base packages
   pacman:
@@ -78,6 +78,8 @@
       - dmidecode          # dump dmi table content
       - python-pre-commit  # pre-commit hook manager
       - zim                # wiki app
+      - mailutils          # mail client
+      - python-pipx        # pip package manager
     state: present
 
 - name: Configure root
